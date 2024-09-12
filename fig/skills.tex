@@ -1,0 +1,48 @@
+% fig/skills.tex
+%
+% Author: Wuqiong Zhao (me@wqzhao.org)
+\bgroup\sffamily%
+\begin{tikzpicture}[
+  , c/.style = {
+    , circle
+    , fill = #1
+    , opacity = 0.3
+    , text opacity = 1
+    , minimum size = 30mm
+  }
+  , cl/.style = {
+    , font = \bfseries
+    , align = center
+    , anchor = center
+  }
+  , sl/.style = {
+    , font = \notsotiny
+    , align = center
+    , fill = gray
+    , opacity = 0.1
+    , text opacity = 1
+    , rounded corners = 1mm
+  }
+  , os/.style = {
+    , color = myyellow!50
+    , path fading = west
+  }
+]
+  \node (a) [c = myblued] {};
+  \node (b) [c = mygreen, right = 22mm of a.center, anchor = center] {};
+  \node (c) [c = myred, below right = 19.06mm and 11mm of a.center, anchor = center] {};
+  \node (a-l) [cl] at ([xshift = -3mm, yshift = 2mm]a.center) {Systems \&\\Networking};
+  \node (b-l) [cl] at ([xshift = 3mm, yshift = 2mm]b.center) {Signal\\Processing};
+  \node (c-l) [cl] at ([xshift = 0mm, yshift = -2mm]c.center) {Hardware\\Implementation};
+  \node (a-s) [sl, anchor = south] at ([xshift = -5mm, yshift = 16mm]a.center) {millimeter wave wireless\\systems, joint communication\\and sensing, WLAN system,\\programming system, DSL};
+  \node (b-s) [sl, anchor = south] at ([xshift = 6mm, yshift = 16mm]b.center) {baseband signal processing,\\compressed sensing, millimeter\\wave, channel estimation,\\ RIS (metasurface), MIMO};
+  \node (c-s) [sl, anchor = north] at ([xshift = 0mm, yshift = -16mm]c.center) {FPGA development, RTL (Verilog), \\ high-level synthesis (HLS), RF frontend,\\computer-aided design (CAD)};
+  \draw [shorten < = 1mm] (a-l.north) -- ++ (0, 8.5mm);
+  \draw [shorten < = 1mm] (b-l.north) -- ++ (0, 8.5mm);
+  \draw [shorten < = 1mm] (c-l.south) -- ++ (0, -8.5mm);
+
+  \fill [os] ([xshift = 5mm, yshift = 5mm]c.east) rectangle +(30mm, -20mm);
+  \node (os-l) [cl, anchor = west] at ([xshift = 10mm, yshift = -1mm]c.east) {Open\\Source};
+  \node (os-s) [sl, below = 0mm of os-l.south, fill = none] {C++, Python, Verilog,\\\textsc{Matlab}, \LaTeX{}, Rust, \dots};
+\end{tikzpicture}%
+\egroup%
