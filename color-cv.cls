@@ -1,10 +1,11 @@
 % color-cv.cls
 %
 % Author: Wuqiong Zhao (me@wqzhao.org)
+% GitHub: https://github.com/Teddy-van-Jerry/color-cv
 \NeedsTeXFormat {LaTeX2e}
 \RequirePackage {l3keys2e}
 \ProvidesExplClass {color-cv}
-  {2024/09/12} {0.1} {Class for Colorful CV}
+  {2024/09/13} {0.1} {Class for Colorful CV}
 
 \str_const:Nn \c__color_cv_base_class_str { article }
 
@@ -61,12 +62,14 @@
 
 %% Setting Information
 \tl_new:N \l_color_cv_name_tl
+\tl_new:N \l_color_cv_phone_tl
 \tl_new:N \l_color_cv_email_tl
 \tl_new:N \l_color_cv_website_tl
 \tl_new:N \l_color_cv_linkedin_tl
 \tl_new:N \l_color_cv_photo_tl
 \tl_new:N \l_color_cv_brief_tl
 \NewDocumentCommand \name { m } { \tl_set:Nn \l_color_cv_name_tl { #1 } }
+\NewDocumentCommand \phone { m } { \tl_set:Nn \l_color_cv_phone_tl { #1 } }
 \NewDocumentCommand \email { m } { \tl_set:Nn \l_color_cv_email_tl { #1 } }
 \NewDocumentCommand \website { m } { \tl_set:Nn \l_color_cv_website_tl { #1 } }
 \NewDocumentCommand \linkedin { m } { \tl_set:Nn \l_color_cv_linkedin_tl { #1 } }
@@ -80,34 +83,6 @@
 \RequirePackage { tabularx }
 \renewcommand { \maketitle }
   {
-    \tl_if_empty:NTF { \l_color_cv_photo_tl }
-      {
-        \begin{center}
-          {
-            \Huge \textsf{\textsc{\tl_use:N \l_color_cv_name_tl}}
-          }
-          \par\vspace{10pt}
-          \tl_if_empty:NF { \l_color_cv_brief_tl } { \textcolor{gray}{\sffamily \tl_use:N \l_color_cv_brief_tl} \par }
-          E-Mail:~\href{mailto:\tl_use:N \l_color_cv_email_tl}{\texttt{\tl_use:N \l_color_cv_email_tl}}
-          \hspace{5pt}\, $\blacklozenge$ \hspace{5pt}
-          Website:~\url{\tl_use:N \l_color_cv_website_tl}
-          \tl_if_empty:NF { \l_color_cv_linkedin_tl } { \hspace{5pt}\, $\blacklozenge$ \hspace{5pt} LinkedIn:~\href{https \c_colon_str //www.linkedin.com/in/\l_color_cv_linkedin_tl}{\texttt{in / \l_color_cv_linkedin_tl}} }
-          \vspace{10pt}
-        \end{center}
-      }
-      {
-        \noindent
-        \renewcommand{\tabcolsep}{0pt}
-        \begin{tabularx}{\textwidth}{Xr}
-          \Huge \textsf{\textsc{\l_color_cv_name_tl}} & \\ \\
-          \tl_if_empty:NF { \l_color_cv_brief_tl } { \textcolor{gray}{\sffamily\l_color_cv_brief_tl} \\ }
-          E-Mail:~\href{mailto:\l_color_cv_email_tl}{\texttt{\l_color_cv_email_tl}} \\
-          Website:~\url{\l_color_cv_website_tl} \\
-          \tl_if_empty:NF { \l_color_cv_linkedin_tl } { LinkedIn:~\href{https \c_colon_str //www.linkedin.com/in/\l_color_cv_linkedin_tl}{\texttt{in / \l_color_cv_linkedin_tl}} } &
-          \smash{\includegraphics[height=30mm]{\l_color_cv_photo_tl}}
-        \end{tabularx}
-      }
-
     % Set Up Document Properties
     \hypersetup
       {
@@ -115,6 +90,82 @@
         , pdftitle   = { \l_color_cv_name_tl \ CV }
         , pdfsubject = { CV }
         , pdfcreator = { LaTeX~with~color-cv~Class }
+        , urlcolor   = \ThemeColor
+        , linkcolor  = \ThemeColor
+        , citecolor  = \CiteColor
+      }
+
+    \tl_if_empty:NTF { \l_color_cv_photo_tl }
+      {
+        % without photo (header is centered)
+        \bool_new:N \l_color_cv_first_link
+        \bool_set_false:N \l_color_cv_first_link
+        \newcommand \color@cv@add@sepapator
+          {
+            \bool_if:NTF \l_color_cv_first_link
+              { \hspace{5pt}\, $\blacklozenge$ \hspace{5pt} }
+              { \bool_set_true:N \l_color_cv_first_link }
+          }
+        \begin{center}
+          {
+            \Huge \textsf{\textsc{\l_color_cv_name_tl}}
+          }
+          \par\vspace{10pt}
+          \tl_if_empty:NF { \l_color_cv_brief_tl }
+            {
+              \textcolor{gray}{\sffamily \l_color_cv_brief_tl} \par
+            }
+          \tl_if_empty:NF { \l_color_cv_phone_tl }
+            {
+              \color@cv@add@sepapator
+              Phone:~\l_color_cv_phone_tl
+            }
+          \tl_if_empty:NF { \l_color_cv_email_tl }
+            {
+              \color@cv@add@sepapator
+              E-Mail:~\href{mailto: \l_color_cv_email_tl}{\texttt{\l_color_cv_email_tl}}
+            }
+          \tl_if_empty:NF { \l_color_cv_website_tl }
+            {
+              \color@cv@add@sepapator
+              Website:~\url{\l_color_cv_website_tl}
+            }
+          \tl_if_empty:NF { \l_color_cv_linkedin_tl }
+            {
+              \color@cv@add@sepapator
+              LinkedIn:~\href{https \c_colon_str //www.linkedin.com/in/\l_color_cv_linkedin_tl}{\texttt{in / \l_color_cv_linkedin_tl}}
+            }
+          \vspace{10pt}
+        \end{center}
+      }
+      {
+        % with photo
+        \noindent
+        \renewcommand{\tabcolsep}{0pt}
+        \begin{tabularx}{\textwidth}{Xr}
+          \Huge \textsf{\textsc{\l_color_cv_name_tl}} & \\ \\
+          \tl_if_empty:NF { \l_color_cv_brief_tl }
+            {
+              \textcolor{gray}{\sffamily\l_color_cv_brief_tl} \\
+            }
+          \tl_if_empty:NF { \l_color_cv_phone_tl }
+            {
+              Phone:~\l_color_cv_phone_tl \\
+            }
+          \tl_if_empty:NF { \l_color_cv_email_tl }
+            {
+              E-Mail:~\href{mailto:\l_color_cv_email_tl}{\texttt{\l_color_cv_email_tl}} \\
+            }
+          \tl_if_empty:NF { \l_color_cv_website_tl }
+            {
+              Website:~\url{\l_color_cv_website_tl} \\
+            }
+          \tl_if_empty:NF { \l_color_cv_linkedin_tl }
+            {
+              LinkedIn:~\href{https \c_colon_str //www.linkedin.com/in/\l_color_cv_linkedin_tl}{\texttt{in / \l_color_cv_linkedin_tl}}
+            }
+          & \smash{\includegraphics[height=30mm]{\l_color_cv_photo_tl}}
+        \end{tabularx}
       }
 
     \thispagestyle{empty}
@@ -126,14 +177,14 @@
 \cfoot {  }
 \fancyhf { }
 \renewcommand { \headrulewidth }{ 0pt }
-\fancyhead [L] { \textsf{\color{gray} \tl_use:N \l_color_cv_name_tl} }
+\fancyhead [L] { \textsf{\color{gray} \l_color_cv_name_tl} }
 \fancyhead [R] { \textsf{\color{gray} \thepage} }
 
 %% Item
 \RequirePackage { enumitem }
-\setlist [itemize] { label = \textcolor{UCSDblue}{$\blacktriangleright$} }
-\setlist [enumerate] { label = \textcolor{UCSDblue}{\textbf{\arabic*}.} }
-\setlist [enumerate, 2] { label = \textcolor{UCSDblue}{\textbf{\roman*})} }
+\setlist [itemize] { label = \textcolor{\ThemeColor}{$\blacktriangleright$} }
+\setlist [enumerate] { label = \textcolor{\ThemeColor}{\textbf{\arabic*}.} }
+\setlist [enumerate, 2] { label = \textcolor{\ThemeColor}{\textbf{\roman*})} }
 
 %% Utilities
 \RequirePackage { tikz }
@@ -172,23 +223,22 @@
 \newcommand { \ThemeColorDark } { UCSDnavy }
 \ExplSyntaxOff
 \titleformat{\section}
-  {\sffamily\bfseries\color{\ThemeColorDark}}{\color{\ThemeColor}\rule[-.45em]{.5em}{1.4em}}{.3em}{\large}[{\vspace*{-0.9em}\tikzrule[\ThemeColor, path fading=east]{\textwidth}{.1em}}\vspace*{-.5em}]
+  {\sffamily\bfseries\color{\ThemeColorDark}}
+  {\color{\ThemeColor}\rule[-.45em]{.5em}{1.4em}}{.3em}{\large}[{\vspace*{-0.9em}\tikzrule[\ThemeColor, path fading=east]{\textwidth}{.1em}}\vspace*{-.5em}]
 \ExplSyntaxOn
+
+%% Hyperref
+\RequirePackage [colorlinks] { hyperref }
+\newcommand \CiteColor { purple }
 
 %% Other Utilities
 \NewDocumentCommand \Textbf { +m }
   {
     \textbf { \color{\ThemeColorDark} #1 }
   }
-
-%% Hyperref
-\RequirePackage { hyperref }
-\hypersetup
+\NewDocumentCommand \Pub { +m }
   {
-    , colorlinks = true
-    , urlcolor   = \ThemeColor
-    , linkcolor  = purple
-    , citecolor  = red
+    \textit { \color{\CiteColor} #1 }
   }
 
 \endinput
