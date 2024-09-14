@@ -25,7 +25,7 @@ View [PDF on *wqzhao.org*](https://go.wqzhao.org/cv).
 
 ## Usage
 The LaTeX engine for `color-cv` is **LuaLaTeX**.
-It can also work with XeLaTeX.
+It can also work with XeLaTeX if you only use the font `libertine` (default) or `lmodern`.
 
 [`color-cv.tex`](color-cv.tex) is an example CV of [Wuqiong Zhao](https://wqzhao.org),
 which can be used as a template for your own CV.
@@ -46,7 +46,7 @@ By default, the paper size is set to US Letter.
 Use option `paper = a4` in the document class to change it to A4 size.
 For example:
 ```latex
-\documentclass[paper = a4]{article}
+\documentclass[paper = a4]{color-cv}
 ```
 
 #### Colors
@@ -59,10 +59,14 @@ For example:
 ```
 
 #### Fonts
-By default, the font is set to use the `libertine` font.
+By default, the font is set to use the `libertine` font option.
 Alternatively, `lmodern`, `times`, `palatino` are available.
+To use the `times` font option, which is configured to use *TeX Gyre Termes* (a *Times New Roman* fork) as the serif font and *TeX Gyre Heros* (a *Helvetica* fork) as the sans-serif font:
+```latex
+\documentclass[font = times]{color-cv}
+```
 
-The mono font is set to use `Inconsolata`.
+The mono font is set to use *Inconsolata*.
 
 ## License
 This project is open-source under the [LPPL license](LICENSE).
