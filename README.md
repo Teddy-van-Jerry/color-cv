@@ -3,7 +3,7 @@ A modern and colorful LaTeX template for CV.
 
 - [x] Modern and colorful design
 - [x] Optional contact information
-- [x] Theme color can be easily customized
+- [x] Easy to customize (colors, fonts, etc.)
 - [x] Ready-to-use example CV
 - [x] Fully open-source (LPPL license)
 
@@ -36,10 +36,20 @@ The contact information can be optionally included in the CV, including:
 - Email (`\email`)
 - Website (`\website`)
 - LinkedIn (`\linkedin`)
+- Photo (`\photo`)
 
 You can also set a brief introduction about yourself using `\brief`.
 
 ### Customization
+#### Paper Size
+By default, the paper size is set to US Letter.
+Use option `paper = a4` in the document class to change it to A4 size.
+For example:
+```latex
+\documentclass[paper = a4]{article}
+```
+
+#### Colors
 The theme color can be easily customized by changing the color definition in the preamble.
 For example:
 ```latex
@@ -47,6 +57,12 @@ For example:
 \renewcommand \ThemeColorDark {brown!50!black}
 \renewcommand \CiteColor      {blue}
 ```
+
+#### Fonts
+By default, the font is set to use the `libertine` font.
+Alternatively, `lmodern`, `times`, `palatino` are available.
+
+The mono font is set to use `Inconsolata`.
 
 ## License
 This project is open-source under the [LPPL license](LICENSE).

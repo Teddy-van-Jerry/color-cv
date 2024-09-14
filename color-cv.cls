@@ -40,9 +40,28 @@
   }
 
 %% Font Settings
-\tl_if_empty:NF { \l__color_cv_font_tl }
-  { \RequirePackage { \tl_use:N \l__color_cv_font_tl } }
 \RequirePackage { fontspec }
+\tl_if_empty:NF { \l__color_cv_font_tl }
+  {
+    \tl_if_eq:NnT { \l__color_cv_font_tl } { libertine }
+      {
+        \RequirePackage { libertine }
+      }
+    \tl_if_eq:NnT { \l__color_cv_font_tl } { lmodern }
+      {
+        \RequirePackage { lmodern }
+      }
+    \tl_if_eq:NnT { \l__color_cv_font_tl } { times }
+      {
+        \setmainfont { TeX Gyre Termes }
+        \setsansfont { TeX Gyre Heros }
+      }
+    \tl_if_eq:NnT { \l__color_cv_font_tl } { palatino }
+      {
+        \setmainfont { TeX Gyre Pagella }
+        \setsansfont { TeX Gyre Heros }
+      }
+  }
 \setmonofont [ Scale=MatchLowercase ] { inconsolata }
 
 %% Maths Environment
