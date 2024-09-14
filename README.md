@@ -68,5 +68,10 @@ To use the `times` font option, which is configured to use *TeX Gyre Termes* (a 
 
 The mono font is set to use *Inconsolata*.
 
+### Predefined Macros
+Some predefined macros are available for you to use:
+- `\Textbf{<text>}`: Bold text and apply the dark theme color.
+- `\Pub{<text>}`: Italic text and apply the citation color.
+
 ## License
 This project is open-source under the [LPPL license](LICENSE).
