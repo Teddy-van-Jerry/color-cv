@@ -73,7 +73,7 @@ Some predefined macros are available for you to use:
 - `\Textbf{<text>}`: Bold text and apply the dark theme color.
 - `\Pub{<text>}`: Italic text and apply the citation color.
 - `\RDate{<date>}`: Gray date at the end of the line.
-- `link{<url>}{<text>}`: Hyperlink with the text and a link logo.
+- `\link{<url>}{<text>}`: Hyperlink with the text and a link logo.
 
 ## License
 This project is open-source under the [LPPL license](LICENSE).
