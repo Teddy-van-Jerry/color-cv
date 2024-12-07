@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Get the PNG demo image from the PDF file.
+# It is recommended to subsequently compress the PNG image to reduce the file size.
+
+# check current directory
+if [ ! -f color-cv.pdf ]; then
+    echo "color-cv.pdf not found in the current directory."
+    exit 1
+fi
+
+# using ImageMagick to convert the PDF to PNG
+magick -density 300 color-cv.pdf[0] -background white -alpha remove demo-photo.png

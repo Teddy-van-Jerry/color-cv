@@ -33,8 +33,8 @@ which can be used as a template for your own CV.
 ### Contact Information
 The contact information can be optionally included in the CV, including:
 - Phone (`\phone`)
-- Email (`\email`)
-- Website (`\website`)
+- Email (`\email` and `\emailaux` for a second email)
+- Website (`\website` and `\websiteaux` for a second website)
 - LinkedIn (`\linkedin`)
 - Photo (`\photo`)
 
@@ -72,6 +72,8 @@ The mono font is set to use *Inconsolata*.
 Some predefined macros are available for you to use:
 - `\Textbf{<text>}`: Bold text and apply the dark theme color.
 - `\Pub{<text>}`: Italic text and apply the citation color.
+- `\RDate{<date>}`: Gray date at the end of the line.
+- `link{<url>}{<text>}`: Hyperlink with the text and a link logo.
 
 ## License
 This project is open-source under the [LPPL license](LICENSE).

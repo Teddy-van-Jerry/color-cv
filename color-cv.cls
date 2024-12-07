@@ -5,7 +5,7 @@
 \NeedsTeXFormat {LaTeX2e}
 \RequirePackage {l3keys2e}
 \ProvidesExplClass {color-cv}
-  {2024/09/13} {0.1} {Class for Colorful CV}
+  {2024/12/07} {0.2} {Class for Colorful CV}
 
 \str_const:Nn \c__color_cv_base_class_str { article }
 
@@ -83,14 +83,18 @@
 \tl_new:N \l_color_cv_name_tl
 \tl_new:N \l_color_cv_phone_tl
 \tl_new:N \l_color_cv_email_tl
+\tl_new:N \l_color_cv_emailaux_tl % auxliary email
 \tl_new:N \l_color_cv_website_tl
+\tl_new:N \l_color_cv_websiteaux_tl % auxliary website
 \tl_new:N \l_color_cv_linkedin_tl
 \tl_new:N \l_color_cv_photo_tl
 \tl_new:N \l_color_cv_brief_tl
 \NewDocumentCommand \name { m } { \tl_set:Nn \l_color_cv_name_tl { #1 } }
 \NewDocumentCommand \phone { m } { \tl_set:Nn \l_color_cv_phone_tl { #1 } }
 \NewDocumentCommand \email { m } { \tl_set:Nn \l_color_cv_email_tl { #1 } }
+\NewDocumentCommand \emailaux { m } { \tl_set:Nn \l_color_cv_emailaux_tl { #1 } }
 \NewDocumentCommand \website { m } { \tl_set:Nn \l_color_cv_website_tl { #1 } }
+\NewDocumentCommand \websiteaux { m } { \tl_set:Nn \l_color_cv_websiteaux_tl { #1 } }
 \NewDocumentCommand \linkedin { m } { \tl_set:Nn \l_color_cv_linkedin_tl { #1 } }
 \NewDocumentCommand \photo { m } { \tl_set:Nn \l_color_cv_photo_tl { #1 } }
 \NewDocumentCommand \brief { m } { \tl_set:Nn \l_color_cv_brief_tl { #1 } }
@@ -143,11 +147,21 @@
             {
               \color@cv@add@sepapator
               E-Mail:~\href{mailto: \l_color_cv_email_tl}{\texttt{\l_color_cv_email_tl}}
+              \tl_if_empty:NF { \l_color_cv_emailaux_tl }
+              {
+                \ / ~
+                \href{mailto: \l_color_cv_emailaux_tl}{\texttt{\l_color_cv_emailaux_tl}}
+              }
             }
           \tl_if_empty:NF { \l_color_cv_website_tl }
             {
               \color@cv@add@sepapator
               Website:~\url{\l_color_cv_website_tl}
+              \tl_if_empty:NF { \l_color_cv_websiteaux_tl }
+              {
+                \ / ~
+                \url{\l_color_cv_websiteaux_tl}
+              }
             }
           \tl_if_empty:NF { \l_color_cv_linkedin_tl }
             {
@@ -173,11 +187,22 @@
             }
           \tl_if_empty:NF { \l_color_cv_email_tl }
             {
-              E-Mail:~\href{mailto:\l_color_cv_email_tl}{\texttt{\l_color_cv_email_tl}} \\
+              E-Mail:~\href{mailto:\l_color_cv_email_tl}{\texttt{\l_color_cv_email_tl}}
+              \tl_if_empty:NF { \l_color_cv_emailaux_tl }
+              {
+                \ / ~
+                \href{mailto: \l_color_cv_emailaux_tl}{\texttt{\l_color_cv_emailaux_tl}}
+              } \\
             }
           \tl_if_empty:NF { \l_color_cv_website_tl }
             {
-              Website:~\url{\l_color_cv_website_tl} \\
+              Website:~\url{\l_color_cv_website_tl}
+              \tl_if_empty:NF { \l_color_cv_websiteaux_tl }
+              {
+                \ / ~
+                \url{\l_color_cv_websiteaux_tl}
+              }
+              \\
             }
           \tl_if_empty:NF { \l_color_cv_linkedin_tl }
             {
@@ -202,8 +227,9 @@
 %% Item
 \RequirePackage { enumitem }
 \setlist [itemize] { label = \textcolor{\ThemeColor}{$\blacktriangleright$} }
+\setlist [itemize, 2] { label = \textcolor{\ThemeColor}{$\bullet$}, nosep }
 \setlist [enumerate] { label = \textcolor{\ThemeColor}{\textbf{\arabic*}.} }
-\setlist [enumerate, 2] { label = \textcolor{\ThemeColor}{\textbf{\roman*})} }
+\setlist [enumerate, 2] { label = \textcolor{\ThemeColor}{\textbf{\roman*})}, nosep }
 
 %% Utilities
 \RequirePackage { tikz }
@@ -231,9 +257,17 @@
   }
 \newcommand{\tikzrule}[3][]{\tikz{\fill[#1] (0,0) rectangle (#2,#3);}}
 \ExplSyntaxOn
-\NewDocumentCommand \link { m m }
+\NewDocumentCommand \link { s m m }
   {
-    \href { #1 } { \sffamily [ #2 ~ \ExternalLinkSymbol \! ] }
+    \IfBooleanTF { #1 }
+      {
+        % starred version for breakable links
+        \href { #2 } { \sffamily [ #3 ~ \ExternalLinkSymbol \! ] }
+      }
+      {
+        % non-starred version for unbreakable links
+        \href { #2 } { \sffamily \mbox { [ #3 ~ \ExternalLinkSymbol \! ] } }
+      }
   }
 
 %% Title
@@ -258,6 +292,14 @@
 \NewDocumentCommand \Pub { +m }
   {
     \textit { \color{\CiteColor} #1 }
+  }
+\NewDocumentCommand \Date { +m }
+  {
+    \textcolor{gray}{#1}
+  }
+\NewDocumentCommand \RDate { +m }
+  {
+    \unskip \hfill \Date { #1 }
   }
 
 \endinput
