@@ -1,13 +1,45 @@
 #!/bin/sh
 #
-# Get the PNG demo image from the PDF file.
-# It is recommended to subsequently compress the PNG image to reduce the file size.
+# Get the PNG demo image from the PDF file compiled from source.
+# It will also run image size optimization if tools exist.
+#
+# This code is only tested on macOS.
 
 # check current directory
-if [ ! -f color-cv.pdf ]; then
-    echo "color-cv.pdf not found in the current directory."
+if [ ! -f color-cv.tex ]; then
+    echo "color-cv.tex not found in the current directory."
+    echo "This script can only be run at the project root."
     exit 1
 fi
 
+# create a temporary directory for LaTeX compilation
+mkdir -p _tmp
+cd _tmp
+
+# copy the LaTeX source files to the temporary directory
+cp ../color-cv.tex ./w-photo.tex
+cp ../color-cv.tex ./wo-photo.tex
+cp ../color-cv.cls .
+cp -r ../fig ./fig
+
+# modify the tex source to have the version with photo
+sed -i '' 's/^% \\photo{photo.jpg}/\\photo{photo.jpg}/' w-photo.tex
+
+# run LaTeX to generate the PDF
+latexmk -pdflua w-photo
+latexmk -pdflua wo-photo
+
 # using ImageMagick to convert the PDF to PNG
-magick -density 300 color-cv.pdf[0] -background white -alpha remove demo-photo.png
+magick -density 300 w-photo.pdf[0] -background white -alpha remove ../demo/w-photo.png
+magick -density 300 wo-photo.pdf[0] -background white -alpha remove ../demo/wo-photo.png
+
+# remove the temporary directory
+cd ..
+rm -r _tmp
+
+# optimize the PNG images if imageoptim is installed
+if command -v imageoptim >/dev/null 2>&1; then
+    imageoptim demo/*.png
+else
+    echo "imageoptim not found, skipping png optimization."
+fi

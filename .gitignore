@@ -306,5 +306,5 @@ TSWLatexianTemp*
 # output PDF (visit https://go.wqzhao.org/cv for the pdf file)
 color-cv.pdf
 
-# output demo image
-demo-photo.png
+# temporary directory
+_tmp/
