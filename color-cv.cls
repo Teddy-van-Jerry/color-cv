@@ -5,7 +5,7 @@
 \NeedsTeXFormat {LaTeX2e}
 \RequirePackage {l3keys2e}
 \ProvidesExplClass {color-cv}
-  {2024/12/07} {0.2} {Class for Colorful CV}
+  {2025/04/24} {0.3} {Class for Colorful CV}
 
 \str_const:Nn \c__color_cv_base_class_str { article }
 
@@ -15,6 +15,8 @@
     , font .initial:n  = { libertine }
     , paper .tl_set:N  = \l__color_cv_paper_paper_tl
     , paper .initial:n = { letter }
+    , compact .bool_set:N = \l__color_cv_compact_bool
+    , compact .initial:n = { false }
     , unknown .code:n  =
         {
           \iow_term:x
@@ -225,10 +227,19 @@
 \fancyhead [R] { \textsf{\color{gray} \thepage} }
 
 %% Item
+\tl_new:N \l_color_cv_item_sep_tl
+\bool_if:NTF { \l__color_cv_compact_bool }
+  {
+    \tl_set:Nn \l_color_cv_item_sep_tl { 0pt }
+  }
+  {
+    \tl_set:Nn \l_color_cv_item_sep_tl { 1.5pt }
+  }
+
 \RequirePackage { enumitem }
-\setlist [itemize] { label = \textcolor{\ThemeColor}{$\blacktriangleright$} }
+\setlist [itemize] { label = \textcolor{\ThemeColor}{$\blacktriangleright$}, itemsep = \l_color_cv_item_sep_tl }
 \setlist [itemize, 2] { label = \textcolor{\ThemeColor}{$\bullet$}, nosep }
-\setlist [enumerate] { label = \textcolor{\ThemeColor}{\textbf{\arabic*}.} }
+\setlist [enumerate] { label = \textcolor{\ThemeColor}{\textbf{\arabic*}.}, itemsep = \l_color_cv_item_sep_tl }
 \setlist [enumerate, 2] { label = \textcolor{\ThemeColor}{\textbf{\roman*})}, nosep }
 
 %% Utilities

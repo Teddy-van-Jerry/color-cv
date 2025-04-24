@@ -49,6 +49,8 @@ For example:
 \documentclass[paper = a4]{color-cv}
 ```
 
+With the compact option, the item separation is set to 0pt instead of 1.5pt.
+
 #### Colors
 The theme color can be easily customized by changing the color definition in the preamble.
 For example:
@@ -56,6 +58,13 @@ For example:
 \renewcommand \ThemeColor     {brown}
 \renewcommand \ThemeColorDark {brown!50!black}
 \renewcommand \CiteColor      {blue}
+```
+
+#### Compactness
+The compactness of the CV can be adjusted by changing the `compact` option in the document class.
+For example:
+```latex
+\documentclass[compact]{color-cv}
 ```
 
 #### Fonts
