@@ -233,7 +233,7 @@
     \tl_set:Nn \l_color_cv_item_sep_tl { 0pt }
   }
   {
-    \tl_set:Nn \l_color_cv_item_sep_tl { 1.5pt }
+    \tl_set:Nn \l_color_cv_item_sep_tl { 1pt }
   }
 
 \RequirePackage { enumitem }
