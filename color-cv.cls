@@ -296,6 +296,7 @@
 \newcommand \CiteColor { purple }
 
 %% Other Utilities
+\RequirePackage { fontawesome5 }
 \NewDocumentCommand \Textbf { +m }
   {
     \textbf { \color{\ThemeColorDark} #1 }
@@ -303,6 +304,19 @@
 \NewDocumentCommand \Pub { +m }
   {
     \textit { \color{\CiteColor} #1 }
+  }
+\NewDocumentCommand \Award { m }
+  {
+    \tikz [ baseline = (award.base) ]
+      \node [
+        fill = black!7,
+        text = \CiteColor,
+        rounded~corners = 2.5pt,
+        inner~xsep = 5pt,
+        inner~ysep = 2pt,
+        outer~sep = 0pt,
+        font = \normalfont\sffamily\bfseries\normalsize
+      ] (award) { \faTrophy \hspace{0.4em} #1 };
   }
 \NewDocumentCommand \Date { +m }
   {
